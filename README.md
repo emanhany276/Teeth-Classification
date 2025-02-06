@@ -76,7 +76,7 @@ These plots help in understanding the model's generalization ability.
 Confusion Matrix
 A confusion matrix is displayed after evaluating the model on the test dataset. This matrix helps identify which classes the model is confusing and where improvements can be made.
 
-Results
+### Results
 The model's accuracy and loss are printed after evaluation on the test dataset:
 
 Test Accuracy: The percentage of correct predictions made by the model.
@@ -84,9 +84,21 @@ Test Loss: The loss value, representing the error between the predicted and true
 Example Confusion Matrix
 The confusion matrix is plotted using seaborn, which provides a clear visual representation of how well the model distinguishes between classes.
 
-Future Work
+### Future Work
 Improving the Model: Try different architectures like ResNet or Inception for better accuracy.
 Hyperparameter Tuning: Experiment with different batch sizes, learning rates, and augmentations.
 Model Deployment: Deploy the trained model in an application for real-time teeth classification.
 
+### Data before augmentation
+![fig1](https://github.com/user-attachments/assets/481c4d3e-0c58-4b5c-acf1-bd10f0f7841d)
+
+### Data after augmentation
+![fig2](https://github.com/user-attachments/assets/3d5d1bfc-8d65-42f9-94ac-a7dac465a1bf)
+
+### Accuracy
+![acc](https://github.com/user-attachments/assets/bd629bfa-2fc7-44d1-a959-48294c2c8a39)
+
+
+### Loss
+![loss](https://github.com/user-attachments/assets/ab5ca292-ab7d-414f-81fb-c0879920f849)
 
