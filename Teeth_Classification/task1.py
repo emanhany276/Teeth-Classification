@@ -8,21 +8,21 @@ batch_size = 32
 
 # Load dataset
 train_ds = tf.keras.preprocessing.image_dataset_from_directory(
-    r"D:\intern\intern\Teeth_Dataset\Training",
+    r"Teeth_Dataset\Training",
     image_size=img_size,
     batch_size=batch_size,
     color_mode="rgb"
 )
 
 test_ds = tf.keras.preprocessing.image_dataset_from_directory(
-    r"D:\intern\intern\Teeth_Dataset\Testing",
+    r"Teeth_Dataset\Testing",
     image_size=img_size,
     batch_size=batch_size,
     color_mode="rgb"
 )
 
 val_ds = tf.keras.preprocessing.image_dataset_from_directory(
-    r"D:\intern\intern\Teeth_Dataset\Validation",
+    r"Teeth_Dataset\Validation",
     image_size=img_size,
     batch_size=batch_size,
     color_mode="rgb"
@@ -112,15 +112,16 @@ input_shape = (32, 32, 3)
 model = tf.keras.models.Sequential([
     tf.keras.layers.Conv2D(filters=64, kernel_size=(3, 3), activation='relu', input_shape=input_shape),
     tf.keras.layers.MaxPooling2D(pool_size=2),
-    #tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Dropout(0.5),
 
     tf.keras.layers.Conv2D(filters=128, kernel_size=(3, 3), activation='relu'),
     tf.keras.layers.MaxPooling2D(pool_size=2),
     tf.keras.layers.Dropout(0.5),
+    
 
     tf.keras.layers.Conv2D(filters=256, kernel_size=(3, 3), activation='relu'),
     tf.keras.layers.MaxPooling2D(pool_size=2),
-    tf.keras.layers.Dropout(0.5),
+    #tf.keras.layers.Dropout(0.4),
 
     tf.keras.layers.Flatten(),
     tf.keras.layers.Dropout(0.5),
@@ -140,7 +141,7 @@ model.compile(optimizer='adam',
 history = model.fit(
     train_data_prepared,
     validation_data=val_data_prepared,
-    epochs=100,  
+    epochs=200,  
     steps_per_epoch=len(train_ds),  # Define how many batches per epoch
     validation_steps=len(val_ds)  
 )
@@ -167,4 +168,29 @@ plt.ylabel('Loss')
 plt.title('Model Loss')
 plt.legend()
 
+plt.show()
+
+
+# Evaluate the model on test dataset
+test_loss, test_acc = model.evaluate(test_data_prepared)
+print(f"Test Accuracy: {test_acc * 100:.2f}%")
+print(f"Test Loss: {test_loss:.4f}")
+
+import numpy as np
+import seaborn as sns
+from sklearn.metrics import confusion_matrix
+
+# Get predictions
+y_true = np.concatenate([y for _, y in test_ds], axis=0)
+y_pred = np.argmax(model.predict(test_ds), axis=1)
+
+# Compute confusion matrix
+cm = confusion_matrix(y_true, y_pred)
+
+# Plot confusion matrix
+plt.figure(figsize=(8, 6))
+sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=class_names, yticklabels=class_names)
+plt.xlabel('Predicted')
+plt.ylabel('Actual')
+plt.title('Confusion Matrix')
 plt.show()
