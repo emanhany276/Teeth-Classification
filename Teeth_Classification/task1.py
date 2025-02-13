@@ -3,7 +3,7 @@ from tensorflow import keras
 import matplotlib.pyplot as plt
 
 # Image size and batch size
-img_size = (32, 32)
+img_size = (256, 256)
 batch_size = 32
 
 # Load dataset
